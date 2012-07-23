@@ -90,13 +90,13 @@ lively-logic所使用的是racket语言，racket是一门动态语言，也是�
 
 当我们在当前时刻改变f为f'，意味着未来将会改变。
 
-![change future](https://github.com/zanezhang/lively-logic/blob/master/doc/pic/changefuture.png)
+![change future](https://github.com/zanezhang/lively-logic/blob/master/doc/images/changefuture.png)
 
 ### 5、 改变历史
 
 当我们把当前时刻回到历史上某一时刻，我们能够重演历史。当我们在当前时刻改变f'，我们能够改变未来。把两者结合，我们就能够改变历史。
 
-![change history](https://github.com/zanezhang/lively-logic/blob/master/doc/pic/changehistory.png)
+![change history](https://github.com/zanezhang/lively-logic/blob/master/doc/images/changehistory.png)
 
 三、具体实现
 -------------------------------
@@ -104,4 +104,10 @@ lively-logic所使用的是racket语言，racket是一门动态语言，也是�
 *   我们保存了历史上前一段时间的状态，所以我们能够重演历史。
 *   demo是用racket写的。racket的eval函数可以在程序运行过程中可以动态编译运行代码。所以我们能够改变f，也就是能够改变未来。
 
-            演历史+改变未来=改变历史
+>>>>重演历史+改变未来=改变历史
+            
+四、如何使用
+--------------------------------------
+
+### 1、demo
+
