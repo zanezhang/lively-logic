@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.0" orientation="orthogonal" width="12" height="14" tilewidth="50" tileheight="50">
+ <tileset firstgid="1" name="barrier1" tilewidth="50" tileheight="50">
+  <image source="../tank-racket/barrier1.png" width="200" height="50"/>
+ </tileset>
+ <layer name="块层 1" width="12" height="14">
+  <data encoding="csv">
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,1,1,1,1,
+0,0,0,0,0,0,0,0,0,0,0,0,
+0,0,0,0,0,0,0,0,1,0,0,0,
+0,0,0,0,0,0,0,0,1,0,0,0,
+0,0,0,0,0,0,0,0,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1,
+1,1,1,1,1,0,0,0,1,1,1,1
+</data>
+ </layer>
+</map>
