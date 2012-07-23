@@ -13,7 +13,7 @@ Getting Started
 
 clone this repo
 
-    git clone git://github.com/zanezhang/example.git
+    git clone https://github.com/zanezhang/lively-logic.git
 
 and ...
 
