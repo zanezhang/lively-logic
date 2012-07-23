@@ -90,4 +90,4 @@ lively-logic所使用的是racket语言，racket是一门动态语言，也是�
 
 当我们在当前时刻改变f为f'，意味着未来将会改变。
 
-![Alt text](/pic/changefuture.jpg)
+![Alt text](https://github.com/zanezhang/lively-logic/blob/master/doc/pic/changefuture.jpg)
