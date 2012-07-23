@@ -60,28 +60,34 @@ lively-logic所使用的是racket语言，racket是一门动态语言，也是一门lisp语言，更是一
 
 向前流逝：
 
-s0
-s0 s1 
-s0 s1 s2
-s0 s1 s2 s3
-s0 s1 s2 s3 s4
-...
+                s0
+                s0 s1 
+                s0 s1 s2
+                s0 s1 s2 s3
+                s0 s1 s2 s3 s4
+                ...
 
 暂停：
 
-s0
-s0 s1
-s0 s1
-s0 s1
-.....
+                s0
+                s0 s1
+                s0 s1
+                s0 s1
+                .....
 
 重演历史：
 
-s0
-s0 s1
-s0 s1 s2
-s0 s1 s2 s3
-s0 s1
-s0 s1 s2
-s0 s1 s2 s3
-.....
+                s0
+                s0 s1
+                s0 s1 s2
+                s0 s1 s2 s3
+                s0 s1
+                s0 s1 s2
+                s0 s1 s2 s3
+                .....
+                
+### 4、改变未来
+
+当我们在当前时刻改变f为f'，意味着未来将会改变。
+
+![Alt text](/pic/changefuture.jpg)
