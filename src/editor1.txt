@@ -1,0 +1,227 @@
+(lambda (interv eventlist mario-s)
+  (begin  
+    (let*([mario-x (state-x mario-s)]
+          [mario-y (state-y mario-s)]
+          [mario-m (state-m mario-s)]
+          [mario-d (state-d mario-s)]
+          [mario-die (state-die mario-s)]
+          [tt (+ (state-totaltime mario-s)interv)]
+          [tx (state-tx mario-s)]
+          [g 0.4];重力加速度
+          [a 1]
+          [v-x (state-v-x mario-s)]
+          [v-y (+ (state-v-y mario-s) (* g interv))]
+          [ontheroad #f]
+          [onthetortoise #f]
+          [imdie #f]
+          [wantjump #f]
+          [temp-y (/(* v-y interv)1000)]
+          [temp-x (/(* v-x interv)1000)]
+          [move-line-y 0]
+          [move-line-x 0]
+          [move-line 0])
+      (define change-direction
+        (lambda(x)
+          (begin
+            (set! mario-m 1)
+            ; (printf "change d")
+            (set! mario-d x))))
+      (define direction-key-release
+        (lambda(x)
+          (set! mario-m 0)))
+      (define event-handler   
+        (lambda (e)
+          (cond
+            [(symbol=? 'jump (car e))
+             (set! wantjump #t)]
+            [(symbol=? 'left (car e))
+             (cond [(symbol=? 'down (cadr e))
+                    (change-direction 1)]
+                   [else (direction-key-release 1)])]
+            [(symbol=? 'right (car e))
+             (cond [(symbol=? 'down (cadr e))
+                    (change-direction 0)]
+                   [else (direction-key-release 0)])])))
+      (define dologic
+        (lambda ()
+          (begin
+            (set! move-line-y (detect-collision-barrier mario-x mario-y 38 38 0 temp-y 
+                                                        barrier-vect tile-width tile-height 
+                                                        tile-step map-width (+ map-height 40)))
+            (set! move-line-x (detect-collision-barrier mario-x (line-y2 move-line-y) 38 38 
+                                                        temp-x 0 barrier-vect tile-width 
+                                                        tile-height tile-step map-width 
+                                                        (+ map-height 40)))
+            (set! move-line (detect-collision-rect mario-x mario-y 38 38 
+                                                   (- (line-x2 move-line-x) mario-x) 
+                                                   (- (line-y2 move-line-x) mario-y)
+                                                   (tortoise-x tx)(+ (tortoise-y tx)20) 40 26))
+            
+            (case (line-direct move-line-y)
+              [(0) ;up
+               (cond
+                 [(> g 0)
+                  (begin 
+                    (set! ontheroad #t)
+                    (set! v-y 0))]
+                 [else
+                  (begin 
+                    (set! v-y (* (- 0 v-y) 0.5)))]
+                 )]
+              [(3);down
+               (cond
+                 [(< g 0)
+                  (begin 
+                    (set! ontheroad #t)
+                    (set! v-y 0))]
+                 [else
+                  (begin 
+                    (set! v-y (* (- 0 v-y) 0.5)))]
+                 )]
+              )
+            (case (line-direct move-line-x)
+              [(1 2);left right
+               (cond [(not ontheroad)
+                      ;(set-state-d! mario-s (- 1 (state-d mario-s)))
+                      (set! v-x (* (- 0 v-x) 0.5))])]
+              )
+            (case (line-direct move-line)
+              [(0) ;up
+               (begin 
+                 (set! onthetortoise #t)
+                 )]
+              [(1 2 3) ;up
+               (begin 
+                 (set! imdie #t)
+                 )]
+              [else
+               (cond
+                 [(rect-intersection mario-y mario-x (+ mario-x 38)(+ mario-y 38)
+                                     (+(tortoise-y tx)20) (tortoise-x tx) 
+                                     (+ 40 (tortoise-x tx))(+ 46 (tortoise-y tx)))
+                  (set! imdie #t)])]
+              )
+            (map event-handler eventlist)
+            (cond
+              [(or ontheroad)
+               (cond 
+                 [(= 1 mario-m)
+                  (set! v-x (* (- 0.5 (state-d mario-s)) 250))]
+                 [else
+                  (set! v-x 0)])]) 
+            (cond
+              [(and ontheroad wantjump)
+               (cond
+                 [(> g 0)
+                  (set! v-y -300)];在平地上起跳的初速度
+                 [else
+                  (set! v-y 300)])])
+            (cond 
+              [imdie
+               (begin
+                 (set-state-die! mario-s 1)
+                 (set! v-x 0)
+                 (set! v-y -150))])
+            ;跳到乌龟上
+            (cond
+              [(and onthetortoise)
+               (begin
+                 (set! v-y -500);跳到乌龟上的反弹速度
+                 (set-tortoise-stop! tx 1)
+                 (set-tortoise-time! tx 3000)
+                 (cond
+                   [(= mario-m 0)
+                    (set! v-x 0) ]
+                   [(= 0 v-x)
+                    (set! v-x (* (- 0.5 (state-d mario-s)) 250))])                  
+                 )])
+            (cond
+              [(and ontheroad (= mario-m 1))
+               (set-state-pitui! mario-s (remainder (floor (/ tt 150)) 2))]
+              [else
+               (set-state-pitui! mario-s 0)])
+            
+            
+            (set-state-win! mario-s 0)
+            (cond 
+              [(and ontheroad (rect-intersection mario-y mario-x (+ mario-x 38)(+ mario-y 38)
+                                                 450 520 570 500)) 
+               (set-state-win! mario-s 1)])
+            
+            (set! mario-x (line-x2 move-line))
+            (set! mario-y (line-y2 move-line))
+            )))
+      
+      (cond
+        [(and (= mario-die 0))
+         (begin
+           (define bound
+             (lambda (min max amt)
+               (cond 
+                 [(< amt min) min]
+                 [(> amt max) max]
+                 [else amt])))
+           (dologic)
+           (cond
+             [(= 1 (state-win mario-s))
+              (begin
+                ;(printf "qqsd")
+                ;下面这一坨来调节win的颜色和大小，依次为r g b size
+                (set-state-cr! mario-s (bound 0 255(inexact->exact (floor(+ 128 (* 127 (sin (/ tt 160))))))))
+                (set-state-cg! mario-s (bound 0 255(inexact->exact (floor(+ 128 (* 127 (cos (/ tt 99))))))))
+                (set-state-cb! mario-s (bound 0 255(inexact->exact (floor(+ 128 (* 127 (sin (/ tt 20))))))))
+                (set-state-csize! mario-s  (bound 10 1000(inexact->exact (floor(+ 100(* 20 (sin (/ tt 599)))))))))]))]
+        [(= mario-die 1 )
+         (begin 
+           (set! mario-x (+ mario-x temp-x))
+           (set! mario-y (+ mario-y temp-y)))])
+      
+      ;乌龟逻辑
+      (define (do-wugui-logic)
+        (let ([base-x 200]
+              [diff 0]
+              [offset 20])
+          (begin
+            (cond
+              [(= (tortoise-stop tx) 0)
+               (begin
+                 ;下面这句话能让乌龟动起来
+                ; (set! diff (*(tortoise-d tx) interv 0.03))
+                 (set-tortoise-x! tx (+ (tortoise-x tx) diff))                 
+                 (set-tortoise-pitui! tx (remainder (floor (/ (abs (tortoise-x tx)) 11)) 2))
+                 )]
+              [else
+               (begin
+                 (set-tortoise-time! tx (- (tortoise-time tx) interv))
+                 (cond
+                   [(< (tortoise-time tx) 0)
+                    (set-tortoise-stop! tx 0)]))])
+            (cond
+              [(> (- (tortoise-x tx) base-x) offset)
+               (begin
+                 (set-tortoise-x! tx(+ base-x offset))
+                 (set-tortoise-d!  tx (- 0 (tortoise-d tx))))]
+              [(> (- base-x (tortoise-x tx)) offset)
+               (begin 
+                 (set-tortoise-x!  tx (- base-x offset))
+                 (set-tortoise-d!  tx (- 0 (tortoise-d tx))))]))))
+      ;;;;;;;;;;;;;;;;
+      (do-wugui-logic)
+      
+      (set-state-totaltime! mario-s tt)
+      (set-state-m! mario-s mario-m)
+      (set-state-d! mario-s mario-d)
+      (set-state-v-x! mario-s v-x)
+      (set-state-v-y! mario-s v-y)
+      (set-state-x! mario-s mario-x)
+      (set-state-y! mario-s mario-y)
+      (set-state-r! mario-s 
+                    (cond
+                      [(> g 0)
+                       0]
+                      [else 1]))
+      (cond  [(> (state-y mario-s) map-height)
+              (begin
+                (set! mario-s (state 1 1 0 0 0 0 0 0 0 0 0 0 0 100 tt tx))
+                )]))
+    mario-s))
