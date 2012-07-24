@@ -19,7 +19,7 @@ Getting Started
 Document
 --------
 
-...
+[文档](https://github.com/zanezhang/lively-logic/blob/master/doc/doc.md)
 
 How Can I Contribute
 --------------------
