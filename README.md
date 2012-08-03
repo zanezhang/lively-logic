@@ -1,7 +1,7 @@
 lively-logic
 ============
 
-这是一个游戏参数实时调节的框架，使用racket语言。
+这是一个游戏逻辑实时调节的框架，使用racket语言。
  * homepage: <https://github.com/zanezhang/lively-logic>
  * Wiki: <https://github.com/zanezhang/lively-logic/wiki/>
  * Issues: <https://github.com/zanezhang/lively-logic/issues/>
