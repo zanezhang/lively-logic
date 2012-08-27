@@ -2,9 +2,10 @@ lively-logic
 ============
 
 This is a game logic real-time adjustment framework, using the racket language.
- * homepage: [homepage]<https://github.com/NetEase/lively-logic>
- * Wiki: [Wiki]<https://github.com/NetEase/lively-logic/wiki/>
- * Issues: [Issues]<https://github.com/NetEase/lively-logic/issues/>
+ * homepage: <https://github.com/NetEase/lively-logic>
+ * Wiki: <https://github.com/NetEase/lively-logic/wiki/>
+ * Issues: <https://github.com/NetEase/lively-logic/issues/>
+ * Tags: racket, lisp, game, framework
  
 Getting Started
 ---------------
@@ -19,7 +20,7 @@ After the installation is complete, open src/pallet - game.rkt, and then click r
 Document
 --------
 
-[doc](https://github.com/zanezhang/lively-logic/blob/master/doc/doc.md)
+[document](https://github.com/zanezhang/lively-logic/blob/master/doc/doc.md)
 
 How Can I Contribute
 --------------------
