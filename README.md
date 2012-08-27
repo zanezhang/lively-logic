@@ -1,25 +1,25 @@
 lively-logic
 ============
 
-这是一个游戏逻辑实时调节的框架，使用racket语言。
- * homepage: <https://github.com/zanezhang/lively-logic>
- * Wiki: <https://github.com/zanezhang/lively-logic/wiki/>
- * Issues: <https://github.com/zanezhang/lively-logic/issues/>
+This is a game logic real-time adjustment framework, using the racket language.
+ * homepage: [homepage]<https://github.com/NetEase/lively-logic>
+ * Wiki: [Wiki]<https://github.com/NetEase/lively-logic/wiki/>
+ * Issues: [Issues]<https://github.com/NetEase/lively-logic/issues/>
  
 Getting Started
 ---------------
 
-克隆这个容器
+clone this repo
 
     git clone git://github.com/zanezhang/lively-logic.git
 
-此项目所用语言为racket，代码运行需要安装racket，racket的官方网站是： <http://racket-lang.org/>。
-安装完成后打开src/pallet-game.rkt，运行即可。
+This project use racket languages, so need to install the racket. Racket's official website is: < http://racket-lang.org/ >. 
+After the installation is complete, open src/pallet - game.rkt, and then click run.
 
 Document
 --------
 
-[文档](https://github.com/zanezhang/lively-logic/blob/master/doc/doc.md)
+[doc](https://github.com/zanezhang/lively-logic/blob/master/doc/doc.md)
 
 How Can I Contribute
 --------------------
