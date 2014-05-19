@@ -14,7 +14,7 @@ clone this repo
 
     git clone git://github.com/NetEase/lively-logic.git
 
-This project use racket languages, so need to install the racket. Racket's official website is: < http://racket-lang.org/ >. 
+This project use racket languages, so need to install the racket. Racket's official website is: < http://racket-lang.org/ >. The recommended version is 5.2.1 . 
 After the installation is complete, open demo/pallet - game.rkt, and then click run.
 
 Document
